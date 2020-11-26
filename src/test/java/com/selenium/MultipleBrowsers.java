@@ -2,7 +2,13 @@ package com.selenium;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +20,15 @@ class MultipleBrowsers
 {
 	private WebDriver driver;
 	private String title = "SeleniumHQ Browser Automation";
-	private String browser = "edge";
+	private static String browser;
+	
+	@BeforeAll
+	static void oneTimeSetUp() throws IOException
+	{
+		Properties prop = new Properties();
+		prop.load(new FileInputStream("src/test/java/com/selenium/browser.config"));
+		browser = prop.getProperty("browser");
+	}
 	
 	@BeforeEach
 	void setup()
